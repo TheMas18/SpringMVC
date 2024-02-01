@@ -50,6 +50,16 @@ public class HomeController {
 		modelAndView.addObject("name", "Goku");
 		LocalDateTime date=LocalDateTime.now();
 		modelAndView.addObject("date",date);
+		
+		// Using JSP Expression Language
+		List<Integer> list=new ArrayList<>();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		list.add(4);
+		list.add(5);
+		modelAndView.addObject("marks",list);
+		
 		modelAndView.setViewName("help");
 		// here we have set view for which we have to send data with which view
 		return modelAndView;
