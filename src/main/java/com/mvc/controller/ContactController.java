@@ -3,6 +3,7 @@ package com.mvc.controller;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,22 +12,49 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mvc.model.User;
+import com.mvc.service.UserService;
 
 @Controller
 public class ContactController {
+	/*------------------------------------SpringMVC ORM-------------------------------------------*/
+
+	@Autowired
+	private UserService userService;
+
+	@RequestMapping(path = "/processform", method = RequestMethod.POST)
+	public String handleForm(@ModelAttribute User user) {
+		this.userService.createUser(user);
+		return "success";
+	}
 
 	@ModelAttribute
 	public void commonMaterial(Model model) {
 		model.addAttribute("Header", "Registration Page");
-		// we can use model attribute like this also like if we have common files
-		// so when handlers will be loaded it will load first so that repetitive code
-		// can be avoided
 	}
 
 	@RequestMapping("/contact")
 	public String showForm() {
 		return "contact";
 	}
+
+	/*--------------------------------------------END OF ORM-----------------------------------*/
+	
+	
+	/*-------------------------------------------------------------------------------*/	
+
+	
+	//	@ModelAttribute
+//	public void commonMaterial(Model model) {
+//		model.addAttribute("Header", "Registration Page");
+//		// we can use model attribute like this also like if we have common files
+//		// so when handlers will be loaded it will load first so that repetitive code
+//		// can be avoided
+//	}
+//
+//	@RequestMapping("/contact")
+//	public String showForm() {
+//		return "contact";
+//	}
 	// first way to get data by using this HttpServletRequest
 //	@RequestMapping(path="/processform" ,method=RequestMethod.POST)
 //	public String handleForm(HttpServletRequest req) {
@@ -73,10 +101,10 @@ public class ContactController {
 //	}
 
 	// Using ModelAttribute
-
-	@RequestMapping(path = "/processform", method = RequestMethod.POST)
-	public String handleForm(@ModelAttribute User user) {
-
-		return "success";
-	}
+	/*
+	 * @RequestMapping(path = "/processform", method = RequestMethod.POST) public
+	 * String handleForm(@ModelAttribute User user) {
+	 * 
+	 * return "success"; }
+	 */
 }
